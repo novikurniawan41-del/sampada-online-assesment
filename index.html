@@ -5,7 +5,34 @@
 <link rel="stylesheet" href="css/tailwind.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{background:#f8fafc}</style>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{background:#f8fafc}
+html body{font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif;background:radial-gradient(900px 320px at 50% -90px,#c7d2fe,transparent),#f8fafc;color:#1e293b}
+.shadow-sm{box-shadow:0 8px 24px -10px rgba(79,70,229,.22),0 1px 3px rgba(15,23,42,.06)!important}
+.bg-indigo-600{background-image:linear-gradient(135deg,#4f46e5,#7c3aed)}.\!bg-emerald-600{background-image:linear-gradient(135deg,#059669,#10b981)}
+.hover\:bg-indigo-700:hover{filter:brightness(1.1);transform:translateY(-1px)}
+header.sticky{backdrop-filter:blur(8px);background:rgba(255,255,255,.88)!important}
+th,td{padding-left:.75rem;padding-right:.75rem}thead tr{background:#f1f5f9}tbody tr:hover{background:#f8fafc}
+.x-login{min-height:100vh;display:grid;grid-template-columns:1fr}
+.x-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#4338ca,#7c3aed 60%,#db2777);color:#fff;padding:2.5rem 1.5rem;display:flex;flex-direction:column;justify-content:center;gap:1rem}
+.x-hero:after{content:"";position:absolute;right:-70px;bottom:-70px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.12)}
+.x-hero h1{font-size:2.25rem;font-weight:800;line-height:1.1}.x-hero p{opacity:.9;max-width:26rem}.x-hero ul{display:grid;gap:.5rem;margin-top:.5rem}
+.x-logo{width:3rem;height:3rem;border-radius:.9rem;background:rgba(255,255,255,.22);display:grid;place-items:center;font-weight:800;font-size:1.4rem}
+.x-logo.sm{width:2.1rem;height:2.1rem;font-size:1rem;color:#fff;background:linear-gradient(135deg,#4f46e5,#7c3aed)}
+.x-field{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem}.x-field label{display:block;font-size:.875rem;font-weight:600}.x-field input{display:block;width:100%}
+.x-pw{position:relative}.x-pw input{padding-right:2.8rem}.x-eye{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);width:2rem;height:2rem;display:grid;place-items:center;border-radius:.5rem;font-size:1.05rem;opacity:.75}.x-eye:hover{opacity:1;background:#f1f5f9}
+.x-brand{display:flex;align-items:center;gap:.5rem}.x-form{display:grid;place-items:center;padding:2rem 1.25rem}
+.x-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem}
+.x-stat{background:#fff;border-radius:1rem;padding:.9rem 1rem;display:flex;gap:.75rem;align-items:center;box-shadow:0 8px 24px -10px rgba(79,70,229,.22),0 1px 3px rgba(15,23,42,.06)}
+.x-stat span{font-size:1.4rem;width:2.7rem;height:2.7rem;display:grid;place-items:center;background:#eef2ff;border-radius:.8rem}.x-stat b{display:block;font-size:1.3rem;line-height:1.2}.x-stat small{color:#64748b;font-size:.75rem}
+.x-banner{background:linear-gradient(135deg,#4f46e5,#7c3aed 65%,#db2777);color:#fff;border-radius:1.25rem;padding:1.5rem;box-shadow:0 12px 28px -12px rgba(79,70,229,.6)}
+.x-banner p{opacity:.85;font-size:.875rem}.x-banner h2{font-size:1.6rem;font-weight:800;margin:.15rem 0 .6rem}.x-banner span{background:rgba(255,255,255,.2);padding:.2rem .75rem;border-radius:9999px;font-size:.8rem;font-weight:600}
+.x-opt{display:inline-grid;place-items:center;width:1.9rem;height:1.9rem;border-radius:50%;background:#eef2ff;color:#4f46e5;margin-right:.75rem;font-size:.85rem}
+.x-bar{height:.4rem;background:#e2e8f0;border-radius:9999px;margin-bottom:1rem;overflow:hidden}.x-bar i{display:block;height:100%;background:linear-gradient(90deg,#4f46e5,#7c3aed);transition:width .3s}
+.x-score{width:9rem;height:9rem;border-radius:50%;margin:1.25rem auto;display:grid;place-items:center;font-size:3.5rem;font-weight:800;border:.6rem solid}.x-score.ok{color:#059669;border-color:#a7f3d0;background:#ecfdf5}.x-score.no{color:#dc2626;border-color:#fecaca;background:#fef2f2}
+@media(min-width:640px){.x-stats{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:768px){.x-login{grid-template-columns:1.1fr 1fr}.x-hero{padding:3rem}.x-hero h1{font-size:2.75rem}}
+</style>
 </head><body class="text-slate-800 min-h-screen"><div id="app"></div>
 <script>
 const S={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
@@ -32,24 +59,26 @@ function render(){const s=me(),a=$('app');
  if(s&&s.role==='siswa'&&V.mode==='quiz')tick()}
 
 /* ---------- AUTH ---------- */
-function loginView(){return`<div class="min-h-screen grid place-items-center p-4"><div class="${C} w-full max-w-sm">
-<div class="text-center mb-5"><div class="text-4xl">📝</div><h1 class="text-2xl font-bold mt-2">SAMPADA EXAM</h1><p class="text-sm text-slate-500">Platform Asesmen Online</p></div>
-<label class="text-sm font-medium">Username</label><input id="lu" class="${I} mb-3" autocomplete="username">
-<label class="text-sm font-medium">Password</label><input id="lp" type="password" class="${I} mb-3" onkeydown="if(event.key==='Enter')login()">
+function loginView(){return`<div class="x-login"><section class="x-hero"><div class="x-logo">S</div><h1>SAMPADA EXAM</h1><p>Platform asesmen online untuk siswa kelas 4, 5, dan 6.</p><ul><li>✅ Soal pilihan ganda interaktif</li><li>⏱️ Timer dan penilaian otomatis</li><li>📊 Rekap nilai langsung</li></ul></section>
+<section class="x-form"><div class="w-full max-w-sm"><h2 class="text-2xl font-bold">Selamat datang 👋</h2><p class="text-sm text-slate-500 mb-5">Masuk untuk melanjutkan</p>
+<div class="x-field"><label for="lu">Username</label><input id="lu" class="${I}" autocomplete="username" placeholder="Masukkan username"></div>
+<div class="x-field"><label for="lp">Password</label><div class="x-pw"><input id="lp" type="password" class="${I}" autocomplete="current-password" placeholder="Masukkan password" onkeydown="if(event.key==='Enter')login()"><button type="button" id="eye" class="x-eye" aria-label="Tampilkan password" onclick="togglePw()">👁️</button></div></div>
 <p id="le" class="text-red-600 text-sm mb-2 hidden">Username atau password salah.</p>
-<button class="${P} w-full" onclick="login()">Masuk</button>
-</div></div>`}
+<button class="${P} w-full py-3" onclick="login()">Masuk</button></div></section></div>`}
+function togglePw(){const i=$('lp'),show=i.type==='password';i.type=show?'text':'password';$('eye').textContent=show?'🙈':'👁️';$('eye').setAttribute('aria-label',show?'Sembunyikan password':'Tampilkan password')}
 function login(){const u=S.get('users',[]).find(x=>x.u===val('lu')&&x.p===$('lp').value);
  if(!u){$('le').classList.remove('hidden');return}
  ses.set({u:u.u,role:u.role,nama:u.nama,kl:u.kl});V={tab:'soal',mode:'home',edit:null,imp:'',kl:'4',sk:'',hk:''};render()}
 function logout(){clearInterval(timer);Q=null;ses.set(null);render()}
-const head=(s,extra='')=>`<header class="bg-white border-b sticky top-0 z-10"><div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2"><div class="font-bold text-indigo-600">📝 SAMPADA EXAM <span class="ml-1 text-xs bg-indigo-50 px-2 py-0.5 rounded-full">${s.role}</span></div>${extra}<div class="flex items-center gap-2 text-sm"><span class="hidden sm:inline">${esc(s.nama)}</span><button class="${G} !py-1" onclick="logout()">Keluar</button></div></div></header>`;
+const head=(s,extra='')=>`<header class="bg-white border-b sticky top-0 z-10"><div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2"><div class="font-bold text-indigo-600 x-brand"><span class="x-logo sm">S</span><span>SAMPADA EXAM</span> <span class="ml-1 text-xs bg-indigo-50 px-2 py-0.5 rounded-full">${s.role}</span></div>${extra}<div class="flex items-center gap-2 text-sm"><span class="hidden sm:inline">${esc(s.nama)}</span><button class="${G} !py-1" onclick="logout()">Keluar</button></div></div></header>`;
 
 /* ---------- ADMIN ---------- */
 function adminView(s){const t=V.tab,tabs=[['soal','Manajemen Soal'],['siswa','Daftar Siswa'],['hasil','Rekap Nilai']];
- return head(s)+`<main class="max-w-5xl mx-auto p-4 space-y-4"><nav class="flex gap-2 overflow-x-auto">${tabs.map(([k,n])=>`<button class="${B} whitespace-nowrap ${t===k?'bg-indigo-600 text-white':'bg-white border'}" onclick="V.tab='${k}';V.edit=null;render()">${n}</button>`).join('')}</nav>${t==='soal'?soalTab():t==='siswa'?siswaTab():hasilTab()}</main>`}
+ return head(s)+`<main class="max-w-5xl mx-auto p-4 space-y-4">${stats()}<nav class="flex gap-2 overflow-x-auto">${tabs.map(([k,n])=>`<button class="${B} whitespace-nowrap ${t===k?'bg-indigo-600 text-white':'bg-white border'}" onclick="V.tab='${k}';V.edit=null;render()">${n}</button>`).join('')}</nav>${t==='soal'?soalTab():t==='siswa'?siswaTab():hasilTab()}</main>`}
 const kelasBar=(fn,cur,all)=>`<div class="flex gap-2 overflow-x-auto">${(all?['',...KL]:KL).map(k=>`<button class="${B} whitespace-nowrap ${cur===k?'bg-slate-800 text-white':'bg-white border'}" onclick="${fn}('${k}')">${k?'Kelas '+k:'Semua'}</button>`).join('')}</div>`;
 const setKl=k=>{V.kl=k;V.edit=null;render()},setSk=k=>{V.sk=k;render()},setHk=k=>{V.hk=k;render()};
+function stats(){const h=S.get('hasil',[]),t=(i,n,l)=>`<div class="x-stat"><span>${i}</span><div><b>${n}</b><small>${l}</small></div></div>`;
+ return`<div class="x-stats">${t('📚',S.get('soal',[]).length,'Total soal')+t('🎒',S.get('users',[]).filter(u=>u.role==='siswa').length,'Siswa')+t('✍️',h.length,'Pengerjaan')+t('⭐',h.length?Math.round(h.reduce((a,x)=>a+x.skor,0)/h.length):0,'Rata-rata nilai')}</div>`}
 function soalTab(){const kl=V.kl,cfg=cfgK(kl),all=S.get('soal',[]),list=all.filter(x=>x.kl===kl),e=all.find(x=>x.id===V.edit)||{q:'',o:['','','','',''],k:'A'};
  return kelasBar('setKl',kl)+`<section class="${C}"><h2 class="font-bold mb-3">Pengaturan Asesmen Kelas ${kl}</h2><div class="grid sm:grid-cols-3 gap-3"><input id="cj" class="${I} sm:col-span-2" value="${esc(cfg.judul)}" placeholder="Judul"><input id="cd" type="number" min="1" class="${I}" value="${cfg.durasi}" placeholder="Durasi (menit)"></div><button class="${P} mt-3" onclick="saveCfg()">Simpan Pengaturan</button></section>
 <section class="${C}"><h2 class="font-bold mb-3">${V.edit?'Edit Soal':'Tambah Soal Manual'} · Kelas ${kl}</h2>
@@ -103,14 +132,14 @@ function hasilTab(){const h=[...S.get('hasil',[])].reverse().filter(x=>!V.hk||x.
 /* ---------- SISWA ---------- */
 function siswaView(s){if(V.mode==='quiz'&&Q)return quizView(s);if(V.mode==='result')return resultView(s);
  const cfg=cfgK(s.kl),n=S.get('soal',[]).filter(x=>x.kl===s.kl).length,h=S.get('hasil',[]).filter(x=>x.u===s.u).reverse();
- return head(s)+`<main class="max-w-3xl mx-auto p-4 space-y-4"><h2 class="text-xl font-bold">Halo, ${esc(s.nama)} 👋 <span class="text-sm font-medium bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full">Kelas ${s.kl||'-'}</span></h2>
+ return head(s)+`<main class="max-w-3xl mx-auto p-4 space-y-4"><div class="x-banner"><p>Selamat datang,</p><h2>${esc(s.nama)} 👋</h2><span>Kelas ${s.kl||'-'}</span></div>
 <div class="${C} flex flex-wrap items-center justify-between gap-3"><div><h3 class="font-semibold text-lg">${esc(cfg.judul)}</h3><p class="text-sm text-slate-500">${n} soal · ${cfg.durasi} menit</p></div><button class="${P}" ${n?'':'disabled'} onclick="startQuiz()">Mulai Latihan</button></div>
 <div class="${C}"><h3 class="font-semibold mb-2">Riwayat Nilai</h3>${h.map(x=>`<div class="flex justify-between border-t py-2 text-sm"><span>${esc(x.judul)} · ${new Date(x.waktu).toLocaleString('id-ID')}</span><b>${x.skor}</b></div>`).join('')||'<p class="text-sm text-slate-500">Belum ada riwayat.</p>'}</div></main>`}
 function startQuiz(){const s=me();Q={list:S.get('soal',[]).filter(x=>x.kl===s.kl),ans:{},i:0,end:Date.now()+cfgK(s.kl).durasi*60000};V.mode='quiz';clearInterval(timer);timer=setInterval(tick,500);render()}
 function tick(){if(!Q)return;const r=Math.max(0,Q.end-Date.now()),el=$('tm');if(el){el.textContent=String(Math.floor(r/60000)).padStart(2,'0')+':'+String(Math.floor(r/1000)%60).padStart(2,'0');el.className=r<60000?'font-mono font-bold text-red-600':'font-mono font-bold'}if(r<=0)finish(true)}
 function quizView(s){const q=Q.list[Q.i],last=Q.i===Q.list.length-1;
  return head(s,`<div class="text-sm">⏱ <span id="tm" class="font-mono font-bold">--:--</span></div>`)+`<main class="max-w-4xl mx-auto p-4 grid md:grid-cols-[1fr_220px] gap-4">
-<section class="${C}"><p class="text-xs text-slate-500 mb-1">Soal ${Q.i+1} dari ${Q.list.length}</p><h3 class="text-lg font-semibold mb-4">${esc(q.q)}</h3><div class="space-y-2">${q.o.map((o,j)=>`<button onclick="pick('${L[j]}')" class="w-full text-left border rounded-xl px-4 py-3 transition ${Q.ans[Q.i]===L[j]?'border-indigo-600 bg-indigo-50 ring-2 ring-indigo-300':'hover:bg-slate-50'}"><b class="mr-2">${L[j]}.</b>${esc(o)}</button>`).join('')}</div>
+<section class="${C}"><div class="x-bar"><i style="width:${Object.keys(Q.ans).length/Q.list.length*100}%"></i></div><p class="text-xs text-slate-500 mb-1">Soal ${Q.i+1} dari ${Q.list.length}</p><h3 class="text-lg font-semibold mb-4">${esc(q.q)}</h3><div class="space-y-2">${q.o.map((o,j)=>`<button onclick="pick('${L[j]}')" class="w-full text-left border rounded-xl px-4 py-3 transition ${Q.ans[Q.i]===L[j]?'border-indigo-600 bg-indigo-50 ring-2 ring-indigo-300':'hover:bg-slate-50'}"><b class="x-opt">${L[j]}</b>${esc(o)}</button>`).join('')}</div>
 <div class="flex justify-between mt-5"><button class="${G}" ${Q.i?'':'disabled'} onclick="Q.i--;render()">← Sebelumnya</button>${last?`<button class="${P} !bg-emerald-600" onclick="finish(false)">Selesai / Kumpul</button>`:`<button class="${P}" onclick="Q.i++;render()">Berikutnya →</button>`}</div></section>
 <aside class="${C} h-fit"><h4 class="font-semibold mb-2 text-sm">Navigasi Soal</h4><div class="grid grid-cols-5 gap-2">${Q.list.map((_,i)=>`<button onclick="Q.i=${i};render()" class="h-9 rounded-lg text-sm font-medium ${i===Q.i?'bg-indigo-600 text-white':Q.ans[i]?'bg-emerald-100 text-emerald-700':'bg-slate-100'}">${i+1}</button>`).join('')}</div><button class="${P} w-full mt-4 !bg-emerald-600" onclick="finish(false)">Kumpul Ujian</button></aside></main>`}
 function pick(k){Q.ans[Q.i]=k;render()}
@@ -119,6 +148,6 @@ function finish(auto){if(!Q)return;const un=Q.list.length-Object.keys(Q.ans).len
  r={id:uid(),u:s.u,nama:s.nama,kl:s.kl,judul:cfgK(s.kl).judul,benar,total,skor:Math.round(benar/total*100),waktu:Date.now(),auto};
  S.set('hasil',[...S.get('hasil',[]),r]);V.last=r;V.mode='result';Q=null;render()}
 function resultView(s){const r=V.last,ok=r.skor>=70;
- return head(s)+`<main class="max-w-md mx-auto p-4"><div class="${C} text-center"><div class="text-5xl">${ok?'🎉':'💪'}</div><h2 class="text-xl font-bold mt-2">${r.auto?'Waktu habis!':'Ujian selesai!'}</h2><p class="text-slate-500 text-sm">${esc(r.judul)}</p><div class="text-6xl font-extrabold my-4 ${ok?'text-emerald-600':'text-red-600'}">${r.skor}</div><p>Benar <b>${r.benar}</b> dari <b>${r.total}</b> soal</p><button class="${P} mt-5" onclick="V.mode='home';render()">Kembali ke Dashboard</button></div></main>`}
+ return head(s)+`<main class="max-w-md mx-auto p-4"><div class="${C} text-center"><div class="text-5xl">${ok?'🎉':'💪'}</div><h2 class="text-xl font-bold mt-2">${r.auto?'Waktu habis!':'Ujian selesai!'}</h2><p class="text-slate-500 text-sm">${esc(r.judul)}</p><div class="x-score ${ok?'ok':'no'}">${r.skor}</div><p>Benar <b>${r.benar}</b> dari <b>${r.total}</b> soal</p><button class="${P} mt-5" onclick="V.mode='home';render()">Kembali ke Dashboard</button></div></main>`}
 render();
 </script></body></html>
