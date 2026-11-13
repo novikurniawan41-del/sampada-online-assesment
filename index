@@ -26,11 +26,11 @@ const B='px-4 py-2 rounded-lg font-medium transition ',P=B+'bg-indigo-600 text-w
 let V={tab:'soal',mode:'home',edit:null,imp:'',kl:'4',sk:'',hk:''},Q=null,timer=null;
 const $=id=>document.getElementById(id),val=id=>$(id).value.trim();
 const me=()=>ses.get();
-
+ 
 function render(){const s=me(),a=$('app');
  if(!s)a.innerHTML=loginView();else if(s.role==='admin')a.innerHTML=adminView(s);else a.innerHTML=siswaView(s);
  if(s&&s.role==='siswa'&&V.mode==='quiz')tick()}
-
+ 
 /* ---------- AUTH ---------- */
 function loginView(){return`<div class="min-h-screen grid place-items-center p-4"><div class="${C} w-full max-w-sm">
 <div class="text-center mb-5"><div class="text-4xl">📝</div><h1 class="text-2xl font-bold mt-2">SAMPADA EXAM</h1><p class="text-sm text-slate-500">Platform Asesmen Online</p></div>
@@ -44,7 +44,7 @@ function login(){const u=S.get('users',[]).find(x=>x.u===val('lu')&&x.p===$('lp'
  ses.set({u:u.u,role:u.role,nama:u.nama,kl:u.kl});V={tab:'soal',mode:'home',edit:null,imp:'',kl:'4',sk:'',hk:''};render()}
 function logout(){clearInterval(timer);Q=null;ses.set(null);render()}
 const head=(s,extra='')=>`<header class="bg-white border-b sticky top-0 z-10"><div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2"><div class="font-bold text-indigo-600">📝 SAMPADA EXAM <span class="ml-1 text-xs bg-indigo-50 px-2 py-0.5 rounded-full">${s.role}</span></div>${extra}<div class="flex items-center gap-2 text-sm"><span class="hidden sm:inline">${esc(s.nama)}</span><button class="${G} !py-1" onclick="logout()">Keluar</button></div></div></header>`;
-
+ 
 /* ---------- ADMIN ---------- */
 function adminView(s){const t=V.tab,tabs=[['soal','Manajemen Soal'],['siswa','Daftar Siswa'],['hasil','Rekap Nilai']];
  return head(s)+`<main class="max-w-5xl mx-auto p-4 space-y-4"><nav class="flex gap-2 overflow-x-auto">${tabs.map(([k,n])=>`<button class="${B} whitespace-nowrap ${t===k?'bg-indigo-600 text-white':'bg-white border'}" onclick="V.tab='${k}';V.edit=null;render()">${n}</button>`).join('')}</nav>${t==='soal'?soalTab():t==='siswa'?siswaTab():hasilTab()}</main>`}
@@ -99,7 +99,7 @@ function importSiswa(inp){const f=inp.files[0];if(!f)return;if(!window.XLSX)retu
  S.set('users',us);alert(n+' siswa diimpor, '+sk+' dilewati (data kurang / username sudah ada / kelas bukan 4-6).');render()}catch(e){alert('Gagal membaca file Excel.')}};r.readAsArrayBuffer(f)}
 function hasilTab(){const h=[...S.get('hasil',[])].reverse().filter(x=>!V.hk||x.kl===V.hk),avg=h.length?Math.round(h.reduce((a,x)=>a+x.skor,0)/h.length):0;
  return kelasBar('setHk',V.hk,true)+`<section class="${C} overflow-x-auto"><div class="flex justify-between items-center mb-3"><h2 class="font-bold">Rekap Nilai · ${h.length} pengerjaan · rata-rata ${avg}</h2><button class="${R} !py-1" onclick="if(confirm('Hapus semua hasil?')){S.set('hasil',[]);render()}">Reset</button></div><table class="w-full text-sm"><thead><tr class="text-left text-slate-500"><th class="py-2">Siswa</th><th>Kelas</th><th>Asesmen</th><th>Benar</th><th>Skor</th><th>Waktu</th></tr></thead><tbody>${h.map(x=>`<tr class="border-t"><td class="py-2">${esc(x.nama)}</td><td>${x.kl||'-'}</td><td>${esc(x.judul)}</td><td>${x.benar}/${x.total}</td><td><b class="${x.skor>=70?'text-emerald-600':'text-red-600'}">${x.skor}</b></td><td>${new Date(x.waktu).toLocaleString('id-ID')}</td></tr>`).join('')||'<tr><td colspan=6 class="py-4 text-slate-500">Belum ada hasil.</td></tr>'}</tbody></table></section>`}
-
+ 
 /* ---------- SISWA ---------- */
 function siswaView(s){if(V.mode==='quiz'&&Q)return quizView(s);if(V.mode==='result')return resultView(s);
  const cfg=cfgK(s.kl),n=S.get('soal',[]).filter(x=>x.kl===s.kl).length,h=S.get('hasil',[]).filter(x=>x.u===s.u).reverse();
@@ -122,3 +122,4 @@ function resultView(s){const r=V.last,ok=r.skor>=70;
  return head(s)+`<main class="max-w-md mx-auto p-4"><div class="${C} text-center"><div class="text-5xl">${ok?'🎉':'💪'}</div><h2 class="text-xl font-bold mt-2">${r.auto?'Waktu habis!':'Ujian selesai!'}</h2><p class="text-slate-500 text-sm">${esc(r.judul)}</p><div class="text-6xl font-extrabold my-4 ${ok?'text-emerald-600':'text-red-600'}">${r.skor}</div><p>Benar <b>${r.benar}</b> dari <b>${r.total}</b> soal</p><button class="${P} mt-5" onclick="V.mode='home';render()">Kembali ke Dashboard</button></div></main>`}
 render();
 </script></body></html>
+ 
